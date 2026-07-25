@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "Inter", system-ui, sans-serif;
+  }
+  body {
+    @apply bg-surface-950 text-surface-100 antialiased;
+  }
+  ::selection {
+    @apply bg-signal-500/40;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface-900 border border-surface-800 rounded-card shadow-card;
+  }
+  .kpi-label {
+    @apply text-xs uppercase tracking-wide text-surface-400 font-medium;
+  }
+  .kpi-value {
+    @apply text-2xl font-semibold text-surface-100 font-mono tabular-nums;
+  }
+  .btn-primary {
+    @apply bg-signal-500 hover:bg-signal-400 active:bg-signal-600 text-white font-medium rounded-md px-4 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply bg-surface-800 hover:bg-surface-700 text-surface-100 font-medium rounded-md px-4 py-2 transition-colors border border-surface-700;
+  }
+  .input-field {
+    @apply w-full bg-surface-900 border border-surface-700 rounded-md px-3 py-2 text-surface-100 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-signal-500 focus:border-transparent transition-shadow;
+  }
+  .field-error {
+    @apply text-danger text-xs mt-1;
+  }
+}
