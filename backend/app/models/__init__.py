@@ -5,4 +5,5 @@ As later phases add tasks.py, tickets.py, sales.py, etc., import them below.
 from app.models.company import Company  # noqa: F401
 from app.models.password_reset_token import PasswordResetToken  # noqa: F401
 from app.models.refresh_token import RefreshToken  # noqa: F401
+from app.models.upload import FileType, Upload, UploadStatus  # noqa: F401
 from app.models.user import User, UserRole  # noqa: F401

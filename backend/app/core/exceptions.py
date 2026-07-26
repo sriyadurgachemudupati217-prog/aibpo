@@ -56,6 +56,16 @@ class ValidationFailedError(AppError):
     detail = "Validation failed."
 
 
+class UnsupportedFileTypeError(AppError):
+    status_code = status.HTTP_415_UNSUPPORTED_MEDIA_TYPE
+    detail = "This file type is not supported."
+
+
+class FileTooLargeError(AppError):
+    status_code = status.HTTP_413_REQUEST_ENTITY_TOO_LARGE
+    detail = "This file exceeds the maximum allowed upload size."
+
+
 def register_exception_handlers(app: FastAPI) -> None:
     @app.exception_handler(AppError)
     async def app_error_handler(request: Request, exc: AppError) -> JSONResponse:

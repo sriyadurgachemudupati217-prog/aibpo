@@ -20,10 +20,14 @@ celery_app.conf.update(
     enable_utc=True,
 )
 
-# Phase 2+ will add: celery_app.autodiscover_tasks(["app.workers"])
-
 
 @celery_app.task(name="aibpo.ping")
 def ping() -> str:
     """Smoke-test task to confirm the worker is wired up correctly."""
     return "pong"
+
+
+# Phase 2: import task modules so the worker registers them. Runtime import
+# placed after `celery_app` is defined to avoid a circular import, since
+# app.workers.tasks imports `celery_app` from this module.
+from app.workers import tasks  # noqa: E402,F401

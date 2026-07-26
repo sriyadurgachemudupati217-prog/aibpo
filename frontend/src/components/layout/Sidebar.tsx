@@ -8,12 +8,14 @@ import {
   Users,
   FileText,
   Settings,
+  UploadCloud,
   X,
 } from "lucide-react";
 import clsx from "clsx";
 
 const NAV_ITEMS = [
   { to: "/dashboard", label: "Overview", icon: LayoutDashboard, end: true },
+  { to: "/dashboard/uploads", label: "Upload Center", icon: UploadCloud },
   { to: "/dashboard/tasks", label: "Tasks", icon: ListChecks },
   { to: "/dashboard/support", label: "Support", icon: LifeBuoy },
   { to: "/dashboard/sales", label: "Sales", icon: TrendingUp },

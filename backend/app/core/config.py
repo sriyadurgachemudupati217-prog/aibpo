@@ -32,6 +32,7 @@ class Settings(BaseSettings):
 
     # Storage
     upload_storage_path: str = "/app/storage/uploads"
+    max_upload_size_mb: int = 25
 
 
 @lru_cache
