@@ -1,10 +1,11 @@
 import { apiClient } from "@/api/client";
-import type { Upload, UploadStatusRead } from "@/types/upload";
+import type { Upload, UploadCategory, UploadStatusRead } from "@/types/upload";
 
 export const uploadsApi = {
-  create: (file: File, onUploadProgress?: (percent: number) => void) => {
+  create: (file: File, category: UploadCategory, onUploadProgress?: (percent: number) => void) => {
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("category", category);
     return apiClient
       .post<Upload>("/uploads", formData, {
         headers: { "Content-Type": "multipart/form-data" },

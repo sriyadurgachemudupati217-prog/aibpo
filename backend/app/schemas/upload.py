@@ -4,7 +4,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict
 
-from app.models.upload import FileType, UploadStatus
+from app.models.upload import FileType, UploadCategory, UploadStatus
 
 
 class UploadRead(BaseModel):
@@ -15,6 +15,7 @@ class UploadRead(BaseModel):
     uploaded_by: uuid.UUID
     original_filename: str
     file_type: FileType
+    category: UploadCategory
     status: UploadStatus
     file_size_bytes: int
     error_message: str | None

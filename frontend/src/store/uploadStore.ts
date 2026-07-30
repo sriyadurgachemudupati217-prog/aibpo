@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { uploadsApi } from "@/api/uploads";
-import type { Upload } from "@/types/upload";
+import type { Upload, UploadCategory } from "@/types/upload";
 
 export interface PendingUpload {
   tempId: string;
@@ -16,7 +16,7 @@ interface UploadState {
   listError: string | null;
 
   fetchUploads: () => Promise<void>;
-  uploadFiles: (files: File[]) => Promise<void>;
+  uploadFiles: (files: File[], category: UploadCategory) => Promise<void>;
   removeUpload: (id: string) => Promise<void>;
   refreshStatuses: () => Promise<void>;
 }
@@ -42,7 +42,7 @@ export const useUploadStore = create<UploadState>((set, get) => ({
     }
   },
 
-  uploadFiles: async (files: File[]) => {
+  uploadFiles: async (files: File[], category: UploadCategory) => {
     const newPending: PendingUpload[] = files.map((file, i) => ({
       tempId: `${Date.now()}-${i}-${file.name}`,
       filename: file.name,
@@ -55,7 +55,7 @@ export const useUploadStore = create<UploadState>((set, get) => ({
       files.map(async (file, i) => {
         const tempId = newPending[i].tempId;
         try {
-          const uploaded = await uploadsApi.create(file, (percent) => {
+          const uploaded = await uploadsApi.create(file, category, (percent) => {
             set((state) => ({
               pendingUploads: state.pendingUploads.map((p) =>
                 p.tempId === tempId ? { ...p, progress: percent } : p

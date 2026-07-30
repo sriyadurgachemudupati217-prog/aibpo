@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Dropzone } from "@/components/upload/Dropzone";
 import { UploadList } from "@/components/upload/UploadList";
 import { Card } from "@/components/ui/Card";
 import { useUploadStore } from "@/store/uploadStore";
+import { UPLOAD_CATEGORY_LABELS, type UploadCategory } from "@/types/upload";
 
 const STATUS_POLL_INTERVAL_MS = 3000;
 
 export default function UploadCenterPage() {
   const { uploads, pendingUploads, listError, fetchUploads, uploadFiles, removeUpload, refreshStatuses } =
     useUploadStore();
+  const [category, setCategory] = useState<UploadCategory>("task_history");
 
   useEffect(() => {
     fetchUploads();
@@ -33,7 +35,27 @@ export default function UploadCenterPage() {
         </p>
       </div>
 
-      <Dropzone onFilesSelected={uploadFiles} />
+      <Card>
+        <label htmlFor="upload-category" className="block text-sm font-medium text-surface-200 mb-1.5">
+          What kind of data is this?
+        </label>
+        <select
+          id="upload-category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value as UploadCategory)}
+          className="input-field mb-4 sm:max-w-xs"
+        >
+          {Object.entries(UPLOAD_CATEGORY_LABELS).map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+        <p className="text-xs text-surface-400 mb-4 -mt-2">
+          "Task history" files are automatically parsed into the Task Analysis dashboard.
+        </p>
+        <Dropzone onFilesSelected={(files) => uploadFiles(files, category)} />
+      </Card>
 
       <Card>
         <div className="flex items-center justify-between mb-2">

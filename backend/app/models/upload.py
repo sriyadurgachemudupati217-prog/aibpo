@@ -25,6 +25,19 @@ class FileType(str, enum.Enum):
     JPG = "jpg"
 
 
+class UploadCategory(str, enum.Enum):
+    """What kind of business data this file represents. Drives which
+    downstream ingestion pipeline picks it up (Phase 3: TASK_HISTORY)."""
+
+    TASK_HISTORY = "task_history"
+    TICKETS = "tickets"
+    SALES = "sales"
+    MEETINGS = "meetings"
+    ATTENDANCE = "attendance"
+    PROJECTS = "projects"
+    OTHER = "other"
+
+
 class UploadStatus(str, enum.Enum):
     PENDING = "pending"
     PROCESSING = "processing"
@@ -43,6 +56,9 @@ class Upload(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     )
     original_filename: Mapped[str] = mapped_column(String(255), nullable=False)
     file_type: Mapped[FileType] = mapped_column(Enum(FileType, name="upload_file_type"), nullable=False)
+    category: Mapped[UploadCategory] = mapped_column(
+        Enum(UploadCategory, name="upload_category"), default=UploadCategory.OTHER, nullable=False
+    )
     status: Mapped[UploadStatus] = mapped_column(
         Enum(UploadStatus, name="upload_status"), default=UploadStatus.PENDING, nullable=False
     )

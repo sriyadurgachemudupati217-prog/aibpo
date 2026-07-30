@@ -5,6 +5,7 @@ import ForgotPasswordPage from "@/features/auth/ForgotPasswordPage";
 import ResetPasswordPage from "@/features/auth/ResetPasswordPage";
 import DashboardHome from "@/features/dashboard/DashboardHome";
 import UploadCenterPage from "@/features/uploads/UploadCenterPage";
+import TaskAnalysisPage from "@/features/tasks/TaskAnalysisPage";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { ProtectedRoute } from "@/components/layout/ProtectedRoute";
 
@@ -28,7 +29,8 @@ export default function App() {
         >
           <Route index element={<DashboardHome />} />
           <Route path="uploads" element={<UploadCenterPage />} />
-          {/* Tasks / Support / Sales / Reports / Team / Settings routes land in later phases */}
+          <Route path="tasks" element={<TaskAnalysisPage />} />
+          {/* Support / Sales / Reports / Team / Settings routes land in later phases */}
         </Route>
 
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

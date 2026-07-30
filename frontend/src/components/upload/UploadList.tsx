@@ -1,7 +1,7 @@
 import { FileText, Trash2, AlertCircle } from "lucide-react";
 import { StatusBadge } from "@/components/upload/StatusBadge";
 import type { PendingUpload } from "@/store/uploadStore";
-import type { Upload } from "@/types/upload";
+import { UPLOAD_CATEGORY_LABELS, type Upload } from "@/types/upload";
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -62,7 +62,8 @@ export function UploadList({ uploads, pendingUploads, onDelete }: UploadListProp
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-surface-100 truncate">{u.original_filename}</p>
             <p className="text-xs text-surface-400 mt-0.5">
-              {formatBytes(u.file_size_bytes)} · Uploaded {formatDate(u.created_at)}
+              {UPLOAD_CATEGORY_LABELS[u.category]} · {formatBytes(u.file_size_bytes)} · Uploaded{" "}
+              {formatDate(u.created_at)}
             </p>
             {u.status === "failed" && u.error_message && (
               <p className="text-xs text-danger flex items-center gap-1 mt-1">

@@ -18,7 +18,7 @@ from app.core.exceptions import (
     UnsupportedFileTypeError,
 )
 from app.core.logging import logger
-from app.models.upload import FileType, Upload, UploadStatus
+from app.models.upload import FileType, Upload, UploadCategory, UploadStatus
 from app.models.user import User, UserRole
 from app.repositories.upload_repository import UploadRepository
 
@@ -43,7 +43,11 @@ class UploadService:
     # --- Create ---
 
     def create_upload(
-        self, current_user: User, filename: str, content: bytes
+        self,
+        current_user: User,
+        filename: str,
+        content: bytes,
+        category: UploadCategory = UploadCategory.OTHER,
     ) -> Upload:
         file_type = self._resolve_file_type(filename)
         self._enforce_size_limit(len(content))
@@ -62,6 +66,7 @@ class UploadService:
             uploaded_by=current_user.id,
             original_filename=filename,
             file_type=file_type,
+            category=category,
             status=UploadStatus.PENDING,
             storage_path=str(storage_path),
             file_size_bytes=len(content),
